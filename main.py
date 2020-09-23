@@ -32,4 +32,29 @@ ps['extra'] = extra_yes_sum + extra_no_sum
 
 ps['female'] = 0
 ps['female'] = ps.sex.eq('Женский').astype(int)
-print(ps)
+
+pure = ps[((ps['volunteer'] == 'Да') & (ps['extra'] > 15)) | ((ps['volunteer'] == 'Нет') & (ps['extra'] < 15))]
+
+sum_yes = (pure.volunteer == 'Да').sum()
+sum_no = (pure.volunteer == 'Нет').sum()
+
+print(pure)
+
+max_extra = pure['extra'].max()
+min_extra = pure['extra'].min()
+mean_extra = pure['extra'].mean()
+median_extra = pure['extra'].median()
+# print(max_extra)
+# print(min_extra)
+# print(mean_extra)
+# print(median_extra)
+
+m = max(median_extra, mean_extra)
+pure['high'] = [1 if x > m else 0 for x in pure['extra']]
+
+# for x in pure['extra']:
+#     if x > m:
+#         pure.loc[x, 'high'] = 1
+#     else:
+#         pure.loc[x, 'high'] = 0
+print(pure)
