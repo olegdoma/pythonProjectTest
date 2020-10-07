@@ -1,14 +1,44 @@
-import pandas as pd
-import numpy as np
+import random, time
 
-dat = pd.read_csv('Fishing.csv')
-dat['log_income'] = dat.loc[:, 'income'].apply(np.log)
-f = lambda x: abs(x - x)
 
-# dat['pdiff'] = dat[['price', 'pbeach']].apply(f, axis=1)
-dat['pdiff2'] = abs(dat['price'] - dat['pbeach'])
+def displayIntro():
+    print('''Вы находитесь в землях, заселенных драконами.
+    Перед собой вы видите две пещеры. В одной из них — дружелюбный дракон,
+    который готов поделиться с вами своими сокровищами. Во второй —
+    жадный и голодный дракон, который мигом вас съест.''')
 
-for name, data in dat.groupby("mode"):
-    data.to_csv(f"{name}" + '.csv')
+    print()
 
-# print(dat)
+
+def chooseCave():
+    cave = ''
+    while cave != '1' and cave != '2':
+        print('В какую пещеру вы войдете? (нажмите клавишу 1 или 2)')
+        cave = input()
+    return cave
+
+
+def checkCave(choosenCave):
+    print('Вы приближаетесь к пещере...')
+    time.sleep(2)
+    print('Ее темнота заставляет вас дрожать от страха...')
+    time.sleep(2)
+    print('Большой дракон выпрыгивает перед вами! Он раскрывает свою пасть и...')
+    print()
+    time.sleep(2)
+
+    friendlyCave = random.randint(1, 2)
+    if choosenCave == str(friendlyCave):
+        print('...делится с вами своими сокровищами!')
+    else:
+        print('...моментально вас съедает!')
+
+
+playAgain = 'да'
+
+while playAgain == 'да':
+    displayIntro()
+    caveNumber = chooseCave()
+    checkCave(caveNumber)
+    print('Попытаете удачу еще раз? (да или нет)')
+    playAgain = input()
