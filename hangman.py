@@ -76,6 +76,7 @@ def endOfGame(yes):
     else:
         return False
 
+
 yes = 'да'
 while endOfGame(yes):
     choosenWord = chooseWord()
@@ -83,22 +84,23 @@ while endOfGame(yes):
     for i in range(len(choosenWord)):
         board.append('*')
     print(''.join(board))
-    print(''.join(choosenWord))
     i = 0
+    missedLetter = []
     while choosenWord != board and i != 6:
         userLetter = input()
-
         if checkLetter(userLetter, choosenWord, board):
             addLetter(userLetter, choosenWord)
             print(HANGMAN_PICS[i])
-
+            print('Этих букв в слове нет: ' + ', '.join(missedLetter))
         else:
+            missedLetter.append(userLetter)
             i += 1
+            print('Этих букв в слове нет: ' + ', '.join(missedLetter))
             print(''.join(board))
             print(HANGMAN_PICS[i])
         if i == 6:
             print('Вас повесили')
+            print('Было загадано слово ' + ''.join(choosenWord))
         if choosenWord == board:
             print('Вы угадали слово')
     yes = input('Сыграем еще раз (да или нет)? ')
-
