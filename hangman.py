@@ -1,4 +1,5 @@
 import random
+import time
 
 HANGMAN_PICS = ['''
 +---+
@@ -79,6 +80,7 @@ def endOfGame(yes):
 
 yes = 'да'
 while endOfGame(yes):
+    print('Я загадал слово')
     choosenWord = chooseWord()
     board = []
     for i in range(len(choosenWord)):
@@ -87,7 +89,9 @@ while endOfGame(yes):
     i = 0
     missedLetter = []
     while choosenWord != board and i != 6:
+        print('Введите букву')
         userLetter = input()
+        time.sleep(1)
         if checkLetter(userLetter, choosenWord, board):
             addLetter(userLetter, choosenWord)
             print(HANGMAN_PICS[i])
@@ -95,9 +99,10 @@ while endOfGame(yes):
         else:
             missedLetter.append(userLetter)
             i += 1
-            print('Этих букв в слове нет: ' + ', '.join(missedLetter))
+
             print(''.join(board))
             print(HANGMAN_PICS[i])
+            print('Этих букв в слове нет: ' + ', '.join(missedLetter))
         if i == 6:
             print('Вас повесили')
             print('Было загадано слово ' + ''.join(choosenWord))
